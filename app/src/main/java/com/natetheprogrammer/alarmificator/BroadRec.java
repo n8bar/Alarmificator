@@ -9,20 +9,17 @@ public class BroadRec extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        
-        String title = intent.getStringExtra("Title");
-        String msg = intent.getStringExtra("Message");
-        
-        String toastText = String.format( title + "\n" + msg );
-        Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
-        
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+            Toast.makeText(context, "swearwords!", Toast.LENGTH_LONG).show();
+        }
+        else {
+            String title = intent.getStringExtra("Title");
+            String msg = intent.getStringExtra("Message");
+
+            String toastText = (title + "\n" + msg);
+            Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
+        }
     }
 
-    private void startAlarmService(Context context, Intent intent) {
-        
-    }
-
-    private void reschedAlarmService() {
-    }
     
 }
