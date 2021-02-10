@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etTitle = (EditText) findViewById(R.id.etTitle);
-        etMsg = (EditText) findViewById(R.id.etMsg);
         btnScheduleAlarm = (Button) findViewById(R.id.btnScheduleAlarm);
         /*
         btnScheduleAlarm.setOnClickListener(new View.OnClickListener() {
@@ -46,17 +44,21 @@ public class MainActivity extends AppCompatActivity {
         
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
+        etTitle = (EditText) findViewById(R.id.etTitle);
+        etMsg = (EditText) findViewById(R.id.etMsg);
+        
         Intent intent = new Intent(context, BroadRec.class);
-        intent.putExtra("Title", etTitle.getText());
-        intent.putExtra("Message", etMsg.getText());
+        intent.putExtra("Title", " "+etTitle.getText() );
+        intent.putExtra("Message", " ► "+etMsg.getText() );
 
-        PendingIntent pi = PendingIntent.getBroadcast(context, alarmId, intent, 0 );
+        PendingIntent pi = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT );
 
         TimePicker timePicker = findViewById(R.id.timePicker);
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(System.currentTimeMillis());
         cal.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
         cal.set(Calendar.MINUTE, timePicker.getMinute());
+        cal.add(Calendar.SECOND, 10);
 
         assert alarmManager != null;
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
